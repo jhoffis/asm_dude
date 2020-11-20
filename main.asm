@@ -2,9 +2,9 @@ global _start
 section .text
 
 _start:
-	mov rdi, 1 		; file handle 1 is stdout
 	call _clear
 	mov rax, 1 		; system call for write
+	mov rdi, 1 		; file handle 1 is stdout
 	mov rsi, message 	; address of string to output
 	mov rdx, 13		; number of bytes
 	syscall			; invoke operating system to do the write
@@ -12,9 +12,10 @@ _start:
 	xor rdi, rdi		; exit code 0
 	syscall			; invoke os to exit
 
-_clear: ; run \033[H\033[2J tror jeg?
-	mov rax, 1
-	mov rsi, clearTerm
+_clear:
+	mov rax, 1		; print
+	mov rdi, 1 		; to stdout
+	mov rsi, clearTerm	; esc all chars in terminal
 	mov rdx, clearTermLen
 	syscall
 	ret
